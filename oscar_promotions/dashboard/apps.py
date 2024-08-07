@@ -1,4 +1,4 @@
-from django.conf.urls import re_path
+from django.urls import re_path
 from django.utils.translation import gettext_lazy as _
 from oscar.core.application import OscarDashboardConfig
 from oscar.core.loading import get_class
