@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import include, re_path
 from django.utils.translation import gettext_lazy as _
 from oscar.core.application import OscarConfig
 from oscar.core.loading import get_class, get_model
@@ -23,16 +23,18 @@ class PromotionsConfig(OscarConfig):
         PagePromotion = get_model('oscar_promotions', 'PagePromotion')
         KeywordPromotion = get_model('oscar_promotions', 'KeywordPromotion')
         urls = [
-            url(
+
+
+            re_path(
                 r'page-redirect/(?P<page_promotion_id>\d+)/$',
                 self.record_click_view.as_view(model=PagePromotion),
                 name='page-click',
             ),
-            url(
+            re_path(
                 r'keyword-redirect/(?P<keyword_promotion_id>\d+)/$',
                 self.record_click_view.as_view(model=KeywordPromotion),
                 name='keyword-click',
             ),
-            url(r'^$', self.home_view.as_view(), name='home'),
+            re_path(r'^$', self.home_view.as_view(), name='home'),
         ]
         return self.post_process_urls(urls)
