@@ -27,15 +27,12 @@ def get_request_promotions(request):
     """
     Return promotions relevant to this request
     """
-    promotions = PagePromotion.objects.select_related() \
-        .prefetch_related('content_object') \
-        .filter(page_url=request.path) \
+    promotions = PagePromotion.objects.filter(page_url=request.path) \
         .order_by('display_order')
 
     if 'q' in request.GET:
         keyword_promotions \
-            = KeywordPromotion.objects.select_related()\
-            .filter(keyword=request.GET['q'])
+            = KeywordPromotion.objects.filter(keyword=request.GET['q'])
         if keyword_promotions.exists():
             promotions = list(chain(promotions, keyword_promotions))
     return promotions
