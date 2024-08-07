@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import re_path
 from django.utils.translation import gettext_lazy as _
 from oscar.core.application import OscarDashboardConfig
 from oscar.core.loading import get_class
@@ -52,19 +52,19 @@ class PromotionsDashboardConfig(OscarDashboardConfig):
 
     def get_urls(self):
         urls = [
-            url(r'^$', self.list_view.as_view(), name='promotion-list'),
-            url(r'^pages/$', self.page_list.as_view(), name='promotion-list-by-page'),
-            url(
+            re_path(r'^$', self.list_view.as_view(), name='promotion-list'),
+            re_path(r'^pages/$', self.page_list.as_view(), name='promotion-list-by-page'),
+            re_path(
                 r'^page/-(?P<path>/([\w-]+(/[\w-]+)*/)?)$',
                 self.page_detail.as_view(),
                 name='promotion-list-by-url',
             ),
-            url(
+            re_path(
                 r'^create/$',
                 self.create_redirect_view.as_view(),
                 name='promotion-create-redirect',
             ),
-            url(
+            re_path(
                 r'^page-promotion/(?P<pk>\d+)/$',
                 self.delete_page_promotion_view.as_view(),
                 name='pagepromotion-delete',
@@ -74,17 +74,17 @@ class PromotionsDashboardConfig(OscarDashboardConfig):
             code = klass.classname()
             urls.extend(
                 [
-                    url(
+                    re_path(
                         r'create/%s/' % code,
                         getattr(self, 'create_%s_view' % code).as_view(),
                         name='promotion-create-%s' % code,
                     ),
-                    url(
+                    re_path(
                         r'^update/(?P<ptype>%s)/(?P<pk>\d+)/$' % code,
                         getattr(self, 'update_%s_view' % code).as_view(),
                         name='promotion-update',
                     ),
-                    url(
+                    re_path(
                         r'^delete/(?P<ptype>%s)/(?P<pk>\d+)/$' % code,
                         getattr(self, 'delete_%s_view' % code).as_view(),
                         name='promotion-delete',
