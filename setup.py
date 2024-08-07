@@ -8,7 +8,7 @@ setup(
     version=VERSION,
     url='https://github.com/django-oscar/django-oscar-promotions',
     author='Oscar Team',
-    author_email='sasha@metaclass.co',
+    author_email='ryan@supported.systems',
     description='Promotions for Django Oscar',
     long_description=open('README.rst').read(),
     license='BSD',
